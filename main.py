@@ -1,5 +1,5 @@
 import json  # Импорт модуля json для работы с JSON
-import os  # Импорт модуля os для работы с файловой системой ( используетс os.path.exists)
+import os  # Импорт модуля os для работы с файловой системой (используется os.path.exists)
 from typing import List  # Импорт List из модуля typing для типизации
 import random  # Импорт модуля random для генерации случайных данных( используется def generate_contacts)
 
