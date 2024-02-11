@@ -65,6 +65,21 @@ class Phonebook:
             print(
                 f"{i + 1}. {self.contacts[i].last_name}, {self.contacts[i].first_name}, {self.contacts[i].work_phone}, {self.contacts[i].personal_phone}")
 
+    def search_contacts(self, query: str) -> List[Contact]:
+        """Поиск контактов по различным характеристикам."""
+        results = []
+        # Приводим запрос к нижнему регистру
+        query = query.lower()
+        for contact in self.contacts:
+            print(contact.to_dict())
+        for contact in self.contacts:
+            # Собираем данные контакта в одну строку для поиска
+            contact_data = ' '.join(contact.to_dict().values()).lower()
+            # Проверяем, содержится ли запрос в данных контакта
+            if query in contact_data:
+                results.append(contact)
+        return results
+
     def generate_contacts(self, num_contacts):
         """Генерация случайных контактов для проверки приложения."""
         first_names = ["Иван", "Петр", "Сергей", "Андрей", "Елена", "Ольга", "Мария", "Александра"]
@@ -124,10 +139,14 @@ class PhonebookApp:
                 self.phonebook.edit_contact(index, contact)
             elif choice == '4':
                 query = input("Введите запрос (фамилия, имя, организация, рабочий телефон, личный телефон): ")
-                results = self.phonebook.search_contacts(last_name=query)
-                for i, contact in enumerate(results, 1):
-                    print(
-                        f"{i}. {contact.last_name}, {contact.first_name}, {contact.work_phone}, {contact.personal_phone}")
+                print(f"Выполняется поиск по запросу: {query}")
+                results = self.phonebook.search_contacts(query)
+                if results:
+                    for i, contact in enumerate(results, 1):
+                        print(
+                            f"{i}. {contact.last_name}, {contact.first_name}, {contact.work_phone}, {contact.personal_phone}")
+                else:
+                    print("Ничего не найдено.")
             elif choice == '5':
                 self.phonebook.generate_contacts(40)
                 print("Созданы и записаны 40 случайных контактов в файл 'contacts.txt'.")
